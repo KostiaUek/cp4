@@ -1,22 +1,20 @@
 package pl.iashchenko.productcatalog;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class ProductCatalog {
 
-    private List<Product> products;
+    ProductStorage productStorage;
 
-    public ProductCatalog() {
-        this.products = new ArrayList<>();
-    }
+    public ProductCatalog(ProductStorage productStorage) {
+        this.productStorage = productStorage;
+    } // TECH
 
     public List<Product> allProducts() {
-        return Collections.unmodifiableList(products);
-    }
+        return productStorage.allProducts();
+    } //TECH
 
     public String createProduct(String name, String description) {
         var uuid = UUID.randomUUID();
@@ -25,24 +23,21 @@ public class ProductCatalog {
                 uuid,
                 name,
                 description
-        );
+        ); // domain
 
-        this.products.add(newProduct);
+        this.productStorage.save(newProduct); // tech
 
         return newProduct.getId();
     }
 
     public Product loadProductById(String productId) {
-        return products.stream()
-                .filter(product -> product.getId().equals(productId))
-                .findFirst()
-                .get();
+        return productStorage.loadProductById(productId);
     }
 
     public void changePrice(String productId, BigDecimal bigDecimal) {
         var product = this.loadProductById(productId);
 
-        if(bigDecimal.compareTo(BigDecimal.ZERO) < 0){
+        if (bigDecimal.compareTo(BigDecimal.ZERO) < 0) { // DOMAIN (business)
             throw new InvalidPriceException();
         }
 
@@ -52,6 +47,6 @@ public class ProductCatalog {
     public void changeImage(String productId, String url) {
         var product = this.loadProductById(productId);
 
-        product.setImage(url);
+        product.setImage(url); // DOMAIN
     }
 }
