@@ -16,7 +16,7 @@ public class SalesController {
     }
 
     @PostMapping("/api/add-product/{productId}")
-    void addProduct(@PathVariable(name = "productId") String productId){
+    void addProduct(@PathVariable(name = "productId") String productId) {
         salesFacade.addToCard(getCurrentCustomer(), productId);
     }
 
@@ -24,7 +24,6 @@ public class SalesController {
     void acceptOffer(@RequestBody AcceptOfferCommand acceptOfferCommand) {
         salesFacade.acceptOffer(acceptOfferCommand);
     }
-
 
     private String getCurrentCustomer() {
         return "kuba";

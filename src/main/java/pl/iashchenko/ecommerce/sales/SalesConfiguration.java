@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class SalesConfiguration {
 
     @Bean
-    SalesFacade createMySalesFacade(){
+    SalesFacade createMySalesFacade() {
         return new SalesFacade();
     }
 }
