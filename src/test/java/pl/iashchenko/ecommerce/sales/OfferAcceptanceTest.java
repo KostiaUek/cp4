@@ -23,7 +23,7 @@ public class OfferAcceptanceTest {
         sales.addProduct(customerId, productId);
 
 
-        var acceptOffer = new AcceptOfferCommand().
+        var acceptOffer = new AcceptOfferCommand();
 
         sales.acceptOffer(customerId, new AcceptOfferCommand());
 
