@@ -21,6 +21,8 @@ public class SqlProductStorageTest {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    public static final String EXAMPLE_PRODUCT_NAME = "example product";
+
     @BeforeEach
     void setupDatabase() {
 
@@ -76,7 +78,7 @@ public class SqlProductStorageTest {
     }
 
     private Product thereIsProduct() {
-        return new Product(UUID.randomUUID(), "test it", "desc");
+        return new Product(UUID.randomUUID(), EXAMPLE_PRODUCT_NAME, "nice one yes yes very nice!!! Horse of lies and deception");
     }
 
 

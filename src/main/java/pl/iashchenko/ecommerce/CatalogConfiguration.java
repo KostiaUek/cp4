@@ -1,10 +1,8 @@
 package pl.iashchenko.ecommerce;
 
-import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
-import pl.iashchenko.productcatalog.ArrayListProductStorage;
 import pl.iashchenko.productcatalog.ProductCatalog;
 import pl.iashchenko.productcatalog.ProductStorage;
 import pl.iashchenko.productcatalog.SqlProductStorage;
@@ -25,7 +23,6 @@ public class CatalogConfiguration {
 
     @Bean
     ProductStorage createMyStorage(JdbcTemplate jdbcTemplate) {
-//        return new ArrayListProductStorage();
         return new SqlProductStorage(jdbcTemplate);
     }
 }

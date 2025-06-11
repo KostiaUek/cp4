@@ -14,25 +14,6 @@ public class SqlProductStorage implements ProductStorage {
 
     public SqlProductStorage(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
-        this.setupDatabase();
-    }
-
-    private void setupDatabase() {
-
-        jdbcTemplate.execute("DROP TABLE `product_catalog_products` IF EXISTS");
-
-        var sql = """
-                    CREATE TABLE `product_catalog_products` (
-                        id VARCHAR(100) NOT NULL,
-                        name VARCHAR(255) NOT NULL,
-                        description VARCHAR(100) NOT NULL,
-                        cover VARCHAR(100),
-                        price DECIMAL(12, 2),
-                        PRIMARY KEY (id)
-                    )
-                """;
-
-        jdbcTemplate.execute(sql);
     }
 
     @Override
@@ -44,7 +25,10 @@ public class SqlProductStorage implements ProductStorage {
             var product = new Product(
                     UUID.fromString(rs.getString("id")),
                     rs.getString("name"),
-                    rs.getString("description"));
+                    rs.getString("name"));
+
+            product.changePrice(rs.getBigDecimal("PRICE"));
+
             return product;
         });
 
@@ -56,9 +40,9 @@ public class SqlProductStorage implements ProductStorage {
         // if already exists
 
         var sql = """
-                INSERT INTO `product_catalog_products`(id, name, description)
+                INSERT INTO `product_catalog_products`(id, name, description, price)
                 VALUES
-                    (:id, :name, :desc)
+                    (:id, :name, :desc, :price)
                 """;
 
         Map<String, Object> params = new HashMap<>();
@@ -66,6 +50,7 @@ public class SqlProductStorage implements ProductStorage {
         params.put("id", newProduct.getId());
         params.put("name", newProduct.getName());
         params.put("desc", newProduct.getDescription());
+        params.put("price", newProduct.getPrice());
 
         var namedJdbc = new NamedParameterJdbcTemplate(jdbcTemplate);
         namedJdbc.update(sql, params);
@@ -80,7 +65,10 @@ public class SqlProductStorage implements ProductStorage {
             var product = new Product(
                     UUID.fromString(rs.getString("id")),
                     rs.getString("name"),
-                    rs.getString("description"));
+                    rs.getString("name"));
+
+            product.changePrice(rs.getBigDecimal("PRICE"));
+
             return product;
         });
 
