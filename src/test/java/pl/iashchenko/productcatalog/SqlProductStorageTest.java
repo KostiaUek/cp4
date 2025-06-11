@@ -22,7 +22,7 @@ public class SqlProductStorageTest {
     }
 
     private ProductStorage thereIsStorage() {
-        return HashMapProductStorage();
+        return new ArrayListProductStorage();
     }
 
     private Product thereIsProduct() {
