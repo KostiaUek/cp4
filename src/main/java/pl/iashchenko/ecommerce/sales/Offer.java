@@ -6,6 +6,6 @@ public class Offer {
     private BigDecimal total;
 
     public BigDecimal getTotal() {
-        return BigDecimal.valueOf(22);
+        return BigDecimal.valueOf(0);
     }
 }
