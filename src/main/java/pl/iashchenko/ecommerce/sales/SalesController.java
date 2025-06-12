@@ -21,8 +21,9 @@ public class SalesController {
     }
 
     @PostMapping("/api/accept-offer")
-    void acceptOffer(@RequestBody AcceptOfferCommand acceptOfferCommand) {
-        salesFacade.acceptOffer(acceptOfferCommand);
+    ReservationDetails acceptOffer(@RequestBody AcceptOfferCommand acceptOfferRequest) {
+        var customerId = getCurrentCustomer();
+        return salesFacade.acceptOffer(customerId, acceptOfferRequest);
     }
 
     private String getCurrentCustomer() {

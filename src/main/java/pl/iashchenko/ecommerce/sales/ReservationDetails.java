@@ -1,11 +1,19 @@
 package pl.iashchenko.ecommerce.sales;
 
 public class ReservationDetails {
+    private String reservationId;
+    private String paymentUrl;
+
+    public ReservationDetails(String reservationId, String paymentUrl) {
+        this.reservationId = reservationId;
+        this.paymentUrl = paymentUrl;
+    }
+
     public String getPaymentUrl() {
-        return "http://fake-payment-gateway/123abc";
+        return paymentUrl;
     }
 
     public String getReservationId() {
-        return "123abc";
+        return reservationId;
     }
 }

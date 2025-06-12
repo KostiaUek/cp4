@@ -2,6 +2,11 @@ package pl.iashchenko.ecommerce.sales;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pl.iashchenko.ecommerce.sales.cart.HashMapCartStorage;
+import pl.iashchenko.ecommerce.sales.offering.OfferCalculator;
+import pl.iashchenko.ecommerce.sales.payment.PaymentDetails;
+import pl.iashchenko.ecommerce.sales.payment.RegisterPaymentRequest;
+import pl.iashchenko.ecommerce.sales.reservation.ReservationRepository;
 import pl.iashchenko.productcatalog.ArrayListProductStorage;
 import pl.iashchenko.productcatalog.ProductCatalog;
 
@@ -70,6 +75,11 @@ public class SalesTest {
     }
 
     private SalesFacade thereIsSalesFacade() {
-        return new SalesFacade();
+        return new SalesFacade(new HashMapCartStorage(),
+                new OfferCalculator(),
+                (RegisterPaymentRequest request) -> {
+                    return new PaymentDetails("http://payment");
+                },
+                new ReservationRepository());
     }
 }

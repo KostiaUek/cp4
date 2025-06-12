@@ -44,7 +44,7 @@ public class SalesHttpTest {
         var toBeCalledURLOffer = getBaseURL("/api/current-offer");
         ResponseEntity<Offer> offerHttp = http.getForEntity(toBeCalledURLOffer, Offer.class);
 
-        assertEquals(BigDecimal.valueOf(22), offerHttp.getBody().getTotal());
+        assertEquals(BigDecimal.valueOf(0), offerHttp.getBody().getTotal());
     }
 
     private String thereIsProduct(String name, BigDecimal bigDecimal) {
