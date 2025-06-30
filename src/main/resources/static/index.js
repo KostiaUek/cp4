@@ -1,30 +1,5 @@
 const API_BASE = '/api';
 
-// Fallback mocks
-const MOCK_PRODUCTS = [
-  {
-    id: '11111111-1111-1111-1111-111111111111',
-    name: 'Coffee Mug',
-    description: 'A sturdy mug for your morning coffee.',
-    price: 7.50,
-    image: 'https://via.placeholder.com/200x140?text=Coffee+Mug'
-  },
-  {
-    id: '22222222-2222-2222-2222-222222222222',
-    name: 'Notebook',
-    description: 'A ruled notebook for notes and sketches.',
-    price: 3.25,
-    image: 'https://via.placeholder.com/200x140?text=Notebook'
-  },
-  {
-    id: '33333333-3333-3333-3333-333333333333',
-    name: 'Water Bottle',
-    description: 'Keeps your drinks cold for hours.',
-    price: 12.00,
-    image: 'https://via.placeholder.com/200x140?text=Water+Bottle'
-  }
-];
-
 async function fetchJSON(path, options = {}) {
   const res = await fetch(API_BASE + path, {
     headers: { 'Content-Type': 'application/json' },
@@ -34,7 +9,7 @@ async function fetchJSON(path, options = {}) {
     const text = await res.text();
     throw new Error(`HTTP ${res.status}: ${text}`);
   }
-  // handle empty bodies
+  // handle empty bodies (e.g. 204 No Content)
   if (res.status === 204 || res.headers.get('Content-Length') === '0') {
     return null;
   }
@@ -67,24 +42,22 @@ function renderProducts(products) {
       <div class="price">$${(+p.price).toFixed(2)}</div>
       <button>Add to Cart</button>
     `;
-    li.querySelector('button').onclick = async () => {
-      await addProduct(p.id);
-    };
+    li.querySelector('button').onclick = () => addProduct(p.id);
     list.appendChild(li);
   });
 }
 
 async function loadProducts() {
   try {
-    let products = await fetchJSON('/products');
-    // if backend returns empty, fall back
-    if (!products || products.length === 0) {
-      throw new Error('no products');
+    const products = await fetchJSON('/products');
+    if (!products || !products.length) {
+      throw new Error('No products returned');
     }
     renderProducts(products);
   } catch (e) {
-    console.warn('Falling back to mock products:', e);
-    renderProducts(MOCK_PRODUCTS);
+    console.error('loadProducts:', e);
+    const list = document.getElementById('products');
+    list.innerHTML = '<li>Error loading products</li>';
   }
 }
 
@@ -103,7 +76,7 @@ async function loadOffer() {
 async function addProduct(productId) {
   try {
     await fetchJSON(`/add-product/${encodeURIComponent(productId)}`, { method: 'POST' });
-    await loadOffer();  // refresh
+    await loadOffer();
   } catch (e) {
     alert('Failed to add product: ' + e.message);
     console.error('addProduct:', e);

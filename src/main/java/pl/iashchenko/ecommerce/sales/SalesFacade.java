@@ -60,6 +60,10 @@ public class SalesFacade {
                 paymentDetails);
 
         reservationRepository.add(reservation);
+        
+        // clear customers cart (imitate the procedure)
+        Cart currentCart = getCurrentCart(customerId);
+        currentCart.clear();
 
         return new ReservationDetails(reservationId, paymentDetails.getPaymentUrl());
     }
@@ -67,8 +71,6 @@ public class SalesFacade {
     public Offer getCurrentOffer(String customerId) {
         return new Offer();
     }
-
-
 
     public Cart getCurrentCart(String customerId) {
         return getCartForCustomer(customerId);
