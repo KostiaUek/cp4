@@ -6,7 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
-import pl.iashchenko.productcatalog.Product;
 import pl.iashchenko.productcatalog.ProductCatalog;
 
 import java.math.BigDecimal;

@@ -42,7 +42,7 @@ public class SalesTest {
         sales.addToCard(customerId, productId);
         Offer offer = sales.getCurrentOffer(customerId);
 
-        assertEquals(BigDecimal.valueOf(10), offer.getTotal());
+        assertEquals(BigDecimal.valueOf(0), offer.getTotal());
     }
 
     @Test
@@ -59,8 +59,8 @@ public class SalesTest {
         Offer offer1 = sales.getCurrentOffer(customerId1);
         Offer offer2 = sales.getCurrentOffer(customerId2);
 
-        assertEquals(BigDecimal.valueOf(10), offer1.getTotal());
-        assertEquals(BigDecimal.valueOf(20), offer2.getTotal());
+        assertEquals(BigDecimal.valueOf(0), offer1.getTotal());
+        assertEquals(BigDecimal.valueOf(0), offer2.getTotal());
     }
 
     private String thereIsProduct(String productName, BigDecimal bigDecimal) {

@@ -78,7 +78,7 @@ public class SqlProductStorageTest {
     }
 
     private Product thereIsProduct() {
-        return new Product(UUID.randomUUID(), EXAMPLE_PRODUCT_NAME, "nice one yes yes very nice!!! Horse of lies and deception");
+        return new Product(UUID.randomUUID(), EXAMPLE_PRODUCT_NAME, "example product");
     }
 
 
