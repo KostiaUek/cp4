@@ -68,6 +68,12 @@ public class SalesFacade {
         return new Offer();
     }
 
+
+
+    public Cart getCurrentCart(String customerId) {
+        return getCartForCustomer(customerId);
+    }
+
     public void makeReservationPaid(String reservationId) {
     }
 

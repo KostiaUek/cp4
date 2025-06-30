@@ -1,6 +1,7 @@
 package pl.iashchenko.ecommerce.sales;
 
 import org.springframework.web.bind.annotation.*;
+import pl.iashchenko.ecommerce.sales.cart.Cart;
 
 @RestController
 public class SalesController {
@@ -11,8 +12,8 @@ public class SalesController {
     }
 
     @GetMapping("/api/current-offer")
-    Offer getCurrentOffer() {
-        return salesFacade.getCurrentOffer(getCurrentCustomer());
+    Cart getCurrentOffer() {
+        return salesFacade.getCurrentCart(getCurrentCustomer());
     }
 
     @PostMapping("/api/add-product/{productId}")
